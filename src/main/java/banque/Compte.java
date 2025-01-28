@@ -19,6 +19,8 @@ public class Compte {
      * @param addrTitulaire L'adresse du titulaire
      * @param decouvertMax Le découvert maximal autorisé
      * @param solde Le solde du compte
+     *
+     * @throws IllegalArgumentException Si le solde est négatif ou si le découvert maximal est négatif
      */
     public Compte(double numero, String nomTitulaire, String prenomTitulaire, String addrTitulaire, double decouvertMax, double solde) throws IllegalArgumentException{
         if(solde < 0) {
