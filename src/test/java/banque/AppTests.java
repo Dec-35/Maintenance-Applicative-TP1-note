@@ -24,6 +24,24 @@ public class AppTests {
         assertEquals(0, compte.getSolde());
     }
 
+    @DisplayName("Création de compte à solde négatif")
+    @Test
+    public void creationCompteSoldeNegatif() {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () ->
+                new Compte(1, "Doe", "John", "1 rue de Paris", 1000, -100)
+        );
+        assertEquals("Solde négatif", exception.getMessage());
+    }
+
+    @DisplayName("Création de compte avec découvert maximal négatif")
+    @Test
+    public void creationCompteDecouvertMaxNegatif() {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () ->
+                new Compte(1, "Doe", "John", "1 rue de Paris", -1000, 100)
+        );
+        assertEquals("Découvert maximal négatif", exception.getMessage());
+    }
+
     @DisplayName("Créditer un compte")
     @Test
     public void crediterCompte() {

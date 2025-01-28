@@ -20,7 +20,15 @@ public class Compte {
      * @param decouvertMax Le découvert maximal autorisé
      * @param solde Le solde du compte
      */
-    public Compte(double numero, String nomTitulaire, String prenomTitulaire, String addrTitulaire, double decouvertMax, double solde) {
+    public Compte(double numero, String nomTitulaire, String prenomTitulaire, String addrTitulaire, double decouvertMax, double solde) throws IllegalArgumentException{
+        if(solde < 0) {
+            throw new IllegalArgumentException("Solde négatif");
+        }
+
+        if(decouvertMax < 0) {
+            throw new IllegalArgumentException("Découvert maximal négatif");
+        }
+
         this.numero = numero;
         this.nomTitulaire = nomTitulaire;
         this.prenomTitulaire = prenomTitulaire;
