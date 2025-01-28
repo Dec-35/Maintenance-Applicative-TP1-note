@@ -31,11 +31,23 @@ public class AppTests {
         assertEquals(1100, compte1.getSolde());
     }
 
+    @DisplayName("Crediter un compte avec montant négatif")
+    @Test
+    public void crediterCompteMontantNegatif() {
+        assertThrows(IllegalArgumentException.class, () -> compte1.crediter(-100));
+    }
+
     @DisplayName("Débiter un compte")
     @Test
     public void debiterCompte() {
         compte1.debiter(100);
         assertEquals(900, compte1.getSolde());
+    }
+
+    @DisplayName("Débiter un compte avec montant négatif")
+    @Test
+    public void debiterCompteMontantNegatif() {
+        assertThrows(IllegalArgumentException.class, () -> compte1.debiter(-100));
     }
 
     @DisplayName("Débiter un compte avec solde insuffisant")
