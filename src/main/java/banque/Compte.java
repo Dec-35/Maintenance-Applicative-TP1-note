@@ -4,17 +4,17 @@ import banque.exceptions.SoldeInsuffisantException;
 
 public class Compte {
 
-    private double numero;
+    private final double numero;
 
-    private String nomTitulaire;
+    private final String nomTitulaire;
 
-    private String prenomTitulaire;
+    private final String prenomTitulaire;
 
-    private String addrTitulaire;
+    private final String addrTitulaire;
 
     private double solde;
 
-    private double decouvertMax;
+    private final double decouvertMax;
 
     public Compte(double numero, String nomTitulaire, String prenomTitulaire, String addrTitulaire, double decouvertMax, double solde) {
         this.numero = numero;
@@ -33,7 +33,7 @@ public class Compte {
 
     /**
      * Credite le compte du montant passé en paramètre
-     * @param montant
+     * @param montant : La somme à créditer
      */
     public void crediter(double montant) {
         if(montant < 0) {
@@ -45,7 +45,7 @@ public class Compte {
 
     /**
      * Débite le compte du montant passé en paramètre
-     * @param montant
+     * @param montant : La somme à débiter
      */
     public void debiter(double montant) throws SoldeInsuffisantException{
         if(montant < 0) {
@@ -61,8 +61,8 @@ public class Compte {
 
     /**
      * Vire le montant passé en paramètre du compte courant vers le compte destination
-     * @param montant
-     * @param destination
+     * @param montant : La somme à virer
+     * @param destination : Le compte de destination
      */
     public void virerVers(double montant, Compte destination) {
         this.debiter(montant);
