@@ -14,13 +14,13 @@ public class AppTests {
 
     @BeforeEach
     public void init() {
-        compte1 = new Compte(1, "Doe", "John", "1 rue de Paris", 1000, 1000);
+        compte1 = new Compte(1, "Doe", "John", "1 rue de Paris", 1000, 2300, 1000);
     }
 
     @DisplayName("Création de compte à solde zero")
     @Test
     public void creationCompteSoldeZero() {
-        Compte compte = new Compte(1, "Doe", "John", "1 rue de Paris", 1000);
+        Compte compte = new Compte(1, "Doe", "John", "1 rue de Paris", 1000, 2000);
         assertEquals(0, compte.getSolde());
     }
 
@@ -28,7 +28,7 @@ public class AppTests {
     @Test
     public void creationCompteSoldeNegatif() {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () ->
-                new Compte(1, "Doe", "John", "1 rue de Paris", 1000, -100)
+                new Compte(1, "Doe", "John", "1 rue de Paris", 1000, 2000, -100)
         );
         assertEquals("Solde négatif", exception.getMessage());
     }
@@ -37,7 +37,7 @@ public class AppTests {
     @Test
     public void creationCompteDecouvertMaxNegatif() {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () ->
-                new Compte(1, "Doe", "John", "1 rue de Paris", -1000, 100)
+                new Compte(1, "Doe", "John", "1 rue de Paris", -1000, 2000, 100)
         );
         assertEquals("Découvert maximal négatif", exception.getMessage());
     }
@@ -77,7 +77,7 @@ public class AppTests {
     @DisplayName("Virement entre deux comptes")
     @Test
     public void virementCompte() {
-        Compte compte2 = new Compte(2, "Doe", "Jane", "1 rue de Paris", 1000, 1000);
+        Compte compte2 = new Compte(2, "Doe", "Jane", "1 rue de Paris", 1000, 200, 1000);
         compte1.virerVers(100, compte2);
         assertEquals(900, compte1.getSolde());
         assertEquals(1100, compte2.getSolde());
@@ -86,14 +86,14 @@ public class AppTests {
     @DisplayName("Virement entre deux comptes avec solde insuffisant")
     @Test
     public void virementCompteSoldeInsuffisant() {
-        Compte compte2 = new Compte(2, "Doe", "Jane", "1 rue de Paris", 1000, 1000);
+        Compte compte2 = new Compte(2, "Doe", "Jane", "1 rue de Paris", 1000, 2500, 1000);
         assertThrows(SoldeInsuffisantException.class, () -> compte1.virerVers(2100, compte2));
     }
 
     @DisplayName("Compte à découvert")
     @Test
     public void testCompteDecouvert(){
-        Compte compte = new Compte(1, "Doe", "John", "1 rue de Paris", 1000, 1000);
+        Compte compte = new Compte(1, "Doe", "John", "1 rue de Paris", 1000, 2000, 1000);
         assertFalse(compte.estDecouvert());
         compte.debiter(1100);
         assertTrue(compte.estDecouvert());

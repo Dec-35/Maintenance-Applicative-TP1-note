@@ -9,7 +9,8 @@ public class Compte {
     private final String prenomTitulaire;
     private final String addrTitulaire;
     private double solde;
-    private final double decouvertMax;
+    private double decouvertMax;
+    private double debitMax;
 
     /**
      * Constructeur d'un compte
@@ -22,7 +23,7 @@ public class Compte {
      *
      * @throws IllegalArgumentException Si le solde est négatif ou si le découvert maximal est négatif
      */
-    public Compte(double numero, String nomTitulaire, String prenomTitulaire, String addrTitulaire, double decouvertMax, double solde) throws IllegalArgumentException{
+    public Compte(double numero, String nomTitulaire, String prenomTitulaire, String addrTitulaire, double decouvertMax, double debitMax, double solde) throws IllegalArgumentException{
         if(solde < 0) {
             throw new IllegalArgumentException("Solde négatif");
         }
@@ -31,11 +32,16 @@ public class Compte {
             throw new IllegalArgumentException("Découvert maximal négatif");
         }
 
+        if(debitMax < 0) {
+            throw new IllegalArgumentException("Debit maximal négatif");
+        }
+
         this.numero = numero;
         this.nomTitulaire = nomTitulaire;
         this.prenomTitulaire = prenomTitulaire;
         this.addrTitulaire = addrTitulaire;
         this.decouvertMax = decouvertMax;
+        this.debitMax = debitMax;
         this.solde = solde;
     }
 
@@ -47,8 +53,8 @@ public class Compte {
      * @param addrTitulaire L'adresse du titulaire
      * @param decouvertMax Le découvert maximal autorisé
      */
-    public Compte(double numero, String nomTitulaire, String prenomTitulaire, String addrTitulaire, double decouvertMax) {
-        this(numero, nomTitulaire, prenomTitulaire, addrTitulaire, decouvertMax, 0);
+    public Compte(double numero, String nomTitulaire, String prenomTitulaire, String addrTitulaire, double decouvertMax, double debitMax) {
+        this(numero, nomTitulaire, prenomTitulaire, addrTitulaire, decouvertMax, debitMax, 0);
     }
 
     // METHODES
@@ -75,6 +81,10 @@ public class Compte {
     public void debiter(double montant) throws SoldeInsuffisantException{
         if(montant < 0) {
             throw new IllegalArgumentException("Montant négatif");
+        }
+
+        if(montant > this.debitMax) {
+            throw new IllegalArgumentException("Montant superieur au debit maximal");
         }
 
         if (this.solde - montant >= -this.decouvertMax) {
@@ -123,4 +133,28 @@ public class Compte {
     public double getSolde() {
         return solde;
     }
+
+    public double getDecouvertMax() {
+        return decouvertMax;
+    }
+
+    public double getDebitMax() {
+        return debitMax;
+    }
+
+    public double getDebitAuthorise() {
+        return Math.min(debitMax, solde);
+    }
+
+    // SETTERS
+
+    public void setDecouvertMax(double decouvertMax) {
+        this.decouvertMax = decouvertMax;
+    }
+
+    public void setDebitMax(double debitMax) {
+        this.debitMax = debitMax;
+    }
+
+
 }
