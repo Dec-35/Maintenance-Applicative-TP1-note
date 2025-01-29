@@ -142,7 +142,7 @@ public class Compte {
         return debitMax;
     }
 
-    public double getDebitAuthorise() {
+    public double getDebitAutorise() {
         return Math.min(debitMax, solde);
     }
 
